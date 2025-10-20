@@ -1,0 +1,41 @@
+# Framework Web e Autenticação
+flask==3.0.2
+flask-login==0.6.3
+werkzeug==3.0.1
+jinja2==3.1.2
+markupsafe==2.1.5
+gunicorn==21.2.0
+
+# Banco de dados e ORM
+supabase==1.2.0
+python-dotenv==1.0.1
+
+# Processamento de PDF e Documentos
+pdfplumber==0.10.3
+python-docx==1.2.0
+
+# Processamento de dados
+pandas==2.2.1
+numpy==1.26.4
+
+# Visualização de dados
+matplotlib==3.8.2
+seaborn==0.13.2
+tabulate==0.9.0
+
+# Processamento de texto e ML
+rapidfuzz==3.13.0
+fuzzywuzzy==0.18.0
+python-Levenshtein==0.27.1
+metaphone==0.6
+
+# Integrações e utilitários
+openai==1.12.0
+requests==2.32.3
+tqdm==4.66.2
+tenacity==8.2.3
+pytz==2024.1
+
+# Web Scraping
+beautifulsoup4==4.12.3
+requests-html==0.10.0

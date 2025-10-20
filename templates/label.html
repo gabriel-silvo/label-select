@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandious Label Select - Selecionar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="https://supabase.com/dashboard/img/favicon/favicon-32x32.png">
+</head>
+<body>
+    <header class="brandious-header">
+        <div class="logo">Brandious</div>
+        <nav>
+            <ul>
+                <li>Funcionalidades</li>
+                <li>Benefícios</li>
+                <li>Planos</li>
+                <li>Depoimentos</li>
+                <li>Sobre nós</li>
+                <li>Blog</li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="title">Selecione o Trecho Desejado</h1>
+        <p class="subtitle">Clique e arraste o mouse para criar uma caixa de seleção sobre o texto.</p>
+
+        <div id="text-container" class="text-display">
+            {{ text }}
+            <div id="selection-box"></div> </div>
+
+        <div class="selection-log">
+            <h2>Trecho Selecionado (Log):</h2>
+            <p id="selected-text-output">Nenhum trecho selecionado ainda.</p>
+        </div>
+
+        <button class="btn btn-secondary" onclick="window.location.href='/'">Voltar</button>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textContainer = document.getElementById('text-container');
+            const selectionBox = document.getElementById('selection-box');
+            const selectedTextOutput = document.getElementById('selected-text-output');
+
+            let isSelecting = false;
+            let startX, startY;
+
+            textContainer.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                isSelecting = true;
+
+                const rect = textContainer.getBoundingClientRect();
+                startX = e.clientX - rect.left;
+                startY = e.clientY - rect.top;
+
+                // Ajusta para a posição do scroll dentro do container
+                const startScrollTop = textContainer.scrollTop;
+                const startScrollLeft = textContainer.scrollLeft;
+                startY += startScrollTop;
+                startX += startScrollLeft;
+
+                selectionBox.style.left = `${startX}px`;
+                selectionBox.style.top = `${startY}px`;
+                selectionBox.style.width = '0px';
+                selectionBox.style.height = '0px';
+                selectionBox.style.display = 'block';
+
+                selectedTextOutput.textContent = "Nenhum trecho selecionado ainda.";
+            });
+
+            textContainer.addEventListener('mousemove', (e) => {
+                if (!isSelecting) return;
+                e.preventDefault();
+
+                const rect = textContainer.getBoundingClientRect();
+                const currentX = e.clientX - rect.left + textContainer.scrollLeft;
+                const currentY = e.clientY - rect.top + textContainer.scrollTop;
+
+                const width = Math.abs(currentX - startX);
+                const height = Math.abs(currentY - startY);
+
+                selectionBox.style.left = `${Math.min(currentX, startX)}px`;
+                selectionBox.style.top = `${Math.min(currentY, startY)}px`;
+                selectionBox.style.width = `${width}px`;
+                selectionBox.style.height = `${height}px`;
+            });
+
+            // Correção para caso o usuário solte o mouse fora da caixa de texto.
+            document.addEventListener('mouseup', () => {
+                if (!isSelecting) return;
+                isSelecting = false;
+                
+                const selectedText = getTextInBoundingBox(textContainer, selectionBox);
+                
+                if (selectedText.trim().length > 0) {
+                    selectedTextOutput.textContent = `"${selectedText.trim()}"`;
+                    console.log('Trecho selecionado:', selectedText.trim());
+                } else {
+                    selectedTextOutput.textContent = "Nenhum trecho selecionado ou caixa muito pequena.";
+                }
+            });
+
+            /**
+             * Função precisa para extrair texto que intersecta com a caixa de seleção.
+             * @param {HTMLElement} container - O elemento que contém o texto.
+             * @param {HTMLElement} box - O elemento da caixa de seleção.
+             * @returns {string} - O texto selecionado.
+             */
+            function getTextInBoundingBox(container, box) {
+                const boxRect = box.getBoundingClientRect();
+                let selectedText = '';
+                let currentLine = '';
+
+                // Itera sobre todos os nós filhos do container
+                const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                
+                while (node = walker.nextNode()) {
+                    if (node.nodeValue.trim() === '') continue;
+
+                    const range = document.createRange();
+                    let lastCharWasSelected = false;
+
+                    for (let i = 0; i < node.nodeValue.length; i++) {
+                        range.setStart(node, i);
+                        range.setEnd(node, i + 1);
+                        const charRect = range.getBoundingClientRect();
+
+                        const charCenterX = charRect.left + charRect.width / 2;
+                        const charCenterY = charRect.top + charRect.height / 2;
+
+                        if (
+                            charCenterX >= boxRect.left &&
+                            charCenterX <= boxRect.right &&
+                            charCenterY >= boxRect.top &&
+                            charCenterY <= boxRect.bottom
+                        ) {
+                            currentLine += node.nodeValue[i];
+                            lastCharWasSelected = true;
+                        } else {
+                            // Se o caractere atual não foi selecionado mas o anterior foi, significa que terminamos um bloco de texto.
+                            if (lastCharWasSelected) {
+                                selectedText += (selectedText.length > 0 ? ' ' : '') + currentLine;
+                                currentLine = '';
+                            }
+                            lastCharWasSelected = false;
+                        }
+                    }
+                    
+                    // Adiciona qualquer texto restante no final do nó
+                    if (currentLine) {
+                        selectedText += (selectedText.length > 0 ? ' ' : '') + currentLine;
+                        currentLine = '';
+                    }
+                }
+
+                return selectedText.trim();
+            }
+        });
+    </script>
+</body>
+</html>

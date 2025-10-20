@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandious Label Select</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="https://supabase.com/dashboard/img/favicon/favicon-32x32.png"> </head>
+<body>
+    <header class="brandious-header">
+        <div class="logo">Brandious</div>
+        <nav>
+            <ul>
+                <li>Funcionalidades</li>
+                <li>Benefícios</li>
+                <li>Planos</li>
+                <li>Depoimentos</li>
+                <li>Sobre nós</li>
+                <li>Blog</li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="title">Ferramenta de Seleção de Texto</h1>
+        <p class="subtitle">Insira o texto que você deseja analisar e rotular.</p>
+
+        <form method="POST">
+            <textarea name="text_input" rows="15" placeholder="Cole seu texto aqui..." class="text-input"></textarea>
+            <button type="submit" class="btn btn-primary submit-btn">Confirmar Texto</button>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,182 @@
+:root {
+    --cor-primaria: #6d2c91;      /* Roxo principal */
+    --cor-secundaria: #f26522;    /* Laranja para CTAs e detalhes */
+    --cor-fundo: #f8f9fa;         /* Cinza muito claro para o fundo */
+    --cor-texto-escuro: #212529;  /* Quase preto para títulos */
+    --cor-texto-claro: #6c757d;   /* Cinza para texto secundário */
+    --cor-sucesso: #2a9d8f;       /* Verde para sucesso/concluído */
+    --cor-erro: #e76f51;          /* Laranja/vermelho para erros */
+    --sombra-caixa: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --gradiente-principal: linear-gradient(90deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-escuro);
+    line-height: 1.6;
+}
+
+.brandious-header {
+    background: linear-gradient(to right, var(--cor-primaria), var(--cor-secundaria));
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.brandious-header .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.brandious-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.brandious-header nav ul li {
+    margin-left: 25px;
+    font-size: 1.05em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.brandious-header nav ul li:hover {
+    color: var(--cor-texto-escuro);
+}
+
+.header-actions .btn {
+    margin-left: 15px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    color: var(--cor-primaria);
+    font-size: 2.2em;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    color: #555555;
+    font-size: 1.1em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.text-input {
+    width: calc(100% - 20px);
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1em;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.text-input:focus {
+    border-color: #e64a78;
+    outline: none;
+}
+
+.btn {
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 12px 25px;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.btn-primary {
+    background-image: var(--gradiente-principal);
+    background-size: 200% auto;
+}
+.btn-primary:hover {
+    background-position: right center;
+}
+.btn-secondary {
+    background-color: var(--cor-secundaria);
+}
+.btn-secondary:hover {
+    background-color: var(--cor-secundaria);
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.selection-log {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-left: 5px solid var(--cor-primaria);
+    border-radius: 5px;
+}
+
+.selection-log h2 {
+    color: var(--cor-primaria);
+    font-size: 1.4em;
+    margin-top: 0;
+}
+
+#selected-text-output {
+    font-size: 1.1em;
+    font-style: italic;
+    color: #555;
+    word-wrap: break-word;
+}
+
+.text-display {
+    border: 2px solid var(--cor-primaria); /* Borda contínua roxa */
+    padding: 20px;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    white-space: pre-wrap;
+    cursor: crosshair;
+    position: relative;
+    user-select: none; /* Desabilita a seleção de texto nativa */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+#selection-box {
+    position: absolute; /* Posicionada absolutamente dentro de .text-display */
+    border: 2px dashed #e64a78; /* A borda tracejada rosa! */
+    background-color: rgba(230, 74, 120, 0.2);
+    pointer-events: none; /* Permite clicar 'através' da caixa para selecionar texto */
+    display: none; /* Escondida por padrão */
+    box-sizing: border-box; /* Garante que padding/border sejam incluídos no width/height */
+}
