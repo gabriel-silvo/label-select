@@ -295,6 +295,44 @@ input[type="file"] {
     border: 1px solid var(--cor-erro, #e76f51);
 }
 
+.filter-bar {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--cor-fundo, #f8f9fa);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.filter-bar strong {
+    color: var(--cor-texto-escuro, #212529);
+}
+
+.btn-filter {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 15px;
+    color: var(--cor-primaria, #6d2c91);
+    background-color: #fff;
+    border: 2px solid var(--cor-primaria, #6d2c91);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filter:hover {
+    background-color: #f1eaf5;
+    transform: translateY(-2px);
+}
+
+.btn-filter.active {
+    background-color: var(--cor-primaria, #6d2c91);
+    color: #fff;
+}
+
 #selection-box {
     position: absolute; /* Posicionada absolutamente dentro de .text-display */
     border: 2px dashed #e64a78; /* A borda tracejada rosa! */

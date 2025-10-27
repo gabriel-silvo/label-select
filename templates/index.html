@@ -29,8 +29,9 @@
             <h4>Ferramentas</h4>
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="active"><a><i class="icon-label"></i> Ferramenta de Seleção</a></li>
-                    <li><a href="{{ url_for('compare') }}"><i class="icon-compare"></i> Comparar Planilhas</a></li>
+                    <li class="{% if request.endpoint == 'index' %}active{% endif %}"><a href="{{ url_for('index') }}"><i class="icon-label"></i> Ferramenta de Seleção</a></li>
+                    <li class="{% if request.endpoint == 'compare' %}active{% endif %}"><a href="{{ url_for('compare') }}"><i class="icon-compare"></i> Comparar Relatórios</a></li>
+                    <li class="{% if request.endpoint == 'validate_lists' %}active{% endif %}"><a href="{{ url_for('validate_lists') }}"><i class="icon-validate"></i> Validar Listas</a></li>
                 </ul>
             </nav>
             
