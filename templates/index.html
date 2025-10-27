@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brandious Label Select</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon" href="https://supabase.com/dashboard/img/favicon/favicon-32x32.png"> </head>
+    <link rel="icon" href="https://supabase.com/dashboard/img/favicon/favicon-32x32.png">
+</head>
 <body>
     <header class="brandious-header">
         <div class="logo">Brandious</div>
@@ -22,6 +23,23 @@
         <div class="header-actions">
         </div>
     </header>
+
+    <aside class="sidebar">
+        <div class="container">
+            <h4>Ferramentas</h4>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a><i class="icon-label"></i> Ferramenta de Seleção</a></li>
+                    <li><a href="{{ url_for('compare') }}"><i class="icon-compare"></i> Comparar Planilhas</a></li>
+                </ul>
+            </nav>
+            
+            <h4 style="margin-top: 30px;">Instruções (Seleção)</h4>
+            <p>1. Cole o texto a ser analisado na área principal.</p>
+            <p>2. Clique em "Analisar Texto".</p>
+            <p>3. Na próxima tela, clique e arraste para selecionar os trechos desejados.</p>
+        </div>
+    </aside>
 
     <main class="container">
         <h1 class="title">Ferramenta de Seleção de Texto</h1>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandious | Comparar Planilhas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-layout">
+
+        <main class="content">
+            <div class="container">
+                <h1>Comparador de Colidências</h1>
+                <p class="subtitulo">Faça o upload do relatório Brandious e do relatório da concorrência para gerar as diferenças.</p>
+
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="upload-area">
+                        <label for="file_brandious" class="custom-file-upload">
+                            <span id="upload-main-text-1">Clique para enviar o Relatório Brandious</span>
+                            <span id="upload-secondary-text-1">(Modelo: relatorio_colidencias...)</span>
+                            <span id="file-name-1" class="file-name-display"></span>
+                        </label>
+                        <input type="file" id="file_brandious" name="file_brandious" accept=".xlsx, .xls">
+
+                        <label for="file_competitor" class="custom-file-upload">
+                            <span id="upload-main-text-2">Clique para enviar o Relatório da Concorrência</span>
+                            <span id="upload-secondary-text-2">(Modelo: Lista Colidências...)</span>
+                            <span id="file-name-2" class="file-name-display"></span>
+                        </label>
+                        <input type="file" id="file_competitor" name="file_competitor" accept=".xlsx, .xls">
+                    </div>
+                    
+                    <input type="submit" value="Comparar Relatórios" class="btn btn-primary" id="compare-btn">
+                </form>
+
+                {% if table_html %}
+                <div class="results-container">
+                    <h2>Diferenças Encontradas</h2>
+                    <p>A tabela abaixo mostra as colidências encontradas apenas em um dos relatórios. O relatório completo está disponível para download.</p>
+                    
+                    <div class="button-bar" style="justify-content: center; margin-bottom: 20px;">
+                        <a href="{{ download_url }}" class="btn btn-secondary">Baixar Relatório de Diferenças (.xlsx)</a>
+                    </div>
+
+                    <div class="table-preview-wrapper">
+                        {{ table_html | safe }}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if error %}
+                    <div class="flash-message error" style="margin-top: 20px;">
+                        {{ error }}
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="container">
+                <h4>Ferramentas</h4>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="{{ url_for('index') }}"><i class="icon-label"></i> Ferramenta de Seleção</a></li>
+                        <li class="active"><a><i class="icon-compare"></i> Comparar Planilhas</a></li>
+                    </ul>
+                </nav>
+
+                <h4 style="margin-top: 30px;">Instruções (Comparação)</h4>
+                <p>1. Envie o relatório gerado pelo Brandious (com formato `relatorio_colidencias...`).</p>
+                <p>2. Envie o relatório da concorrência (com formato `Lista Colidências...`).</p>
+                <p>3. Clique em "Comparar Relatórios".</p>
+                <p>4. O sistema gerará uma tabela de "diff" e um link para download do arquivo Excel com as diferenças.</p>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        document.getElementById('file_brandious').addEventListener('change', function() {
+            document.getElementById('file-name-1').textContent = this.files[0].name;
+            document.getElementById('upload-main-text-1').textContent = "Arquivo Brandious Carregado:";
+        });
+        document.getElementById('file_competitor').addEventListener('change', function() {
+            document.getElementById('file-name-2').textContent = this.files[0].name;
+            document.getElementById('upload-main-text-2').textContent = "Arquivo Concorrência Carregado:";
+        });
+    </script>
+</body>
+</html>
